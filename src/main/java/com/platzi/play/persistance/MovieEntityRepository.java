@@ -20,7 +20,27 @@ public class MovieEntityRepository implements MovieRepository {
     }
 
     @Override
+    public MovieDto getById(Long id) {
+        return this.movieMapper.toDto(this.crudMovieEntity.findById(id).orElse(null));
+    }
+
+    @Override
     public List<MovieDto> getAll() {
         return this.movieMapper.toDto(this.crudMovieEntity.findAll());
+    }
+
+    @Override
+    public void save(MovieDto movieDto) {
+        this.crudMovieEntity.save(this.movieMapper.toEntity(movieDto));
+    }
+
+    @Override
+    public void delete(Long id) {
+        this.crudMovieEntity.deleteById(id);
+    }
+
+    @Override
+    public void update(MovieDto movieDto) {
+        this.crudMovieEntity.save(this.movieMapper.toEntity(movieDto));
     }
 }
