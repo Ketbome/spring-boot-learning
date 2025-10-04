@@ -2,6 +2,7 @@ package com.platzi.play.persistance.mapper;
 
 import java.util.List;
 
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -19,11 +20,8 @@ public interface MovieMapper {
     MovieDto toDto(MovieEntity movieEntity);
     List<MovieDto> toDto(Iterable<MovieEntity> movieEntities);
 
-    @Mapping(source = "title", target = "titulo")
-    @Mapping(source = "duration", target = "duracion")
+    @InheritInverseConfiguration
     @Mapping(source = "genre", target = "genero", qualifiedByName = "genreToString")
-    @Mapping(source = "rating", target = "clasificacion")
-    @Mapping(source = "releaseDate", target = "fechaEstreno")
     @Mapping(source = "status", target = "estado", qualifiedByName = "stateToString")
     MovieEntity toEntity(MovieDto movieDto);
 }

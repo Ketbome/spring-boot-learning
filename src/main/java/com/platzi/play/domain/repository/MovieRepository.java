@@ -9,10 +9,10 @@ public interface MovieRepository {
     
     List<MovieDto> getAll();
 
-    void save(MovieDto movieDto);
+    MovieDto save(MovieDto movieDto);
 
     void delete(Long id);
 
-    void update(MovieDto movieDto);
+    MovieDto update(MovieDto movieDto);
     
 }

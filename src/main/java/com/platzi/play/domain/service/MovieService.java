@@ -23,15 +23,15 @@ public class MovieService {
         return movieRepository.getAll();
     }
 
-    public void save(MovieDto movieDto) {
-        movieRepository.save(movieDto);
+    public MovieDto save(MovieDto movieDto) {
+        return movieRepository.save(movieDto);
     }
 
     public void delete(Long id) {
         movieRepository.delete(id);
     }
     
-    public void update(MovieDto movieDto) {
-        movieRepository.update(movieDto);
+    public MovieDto update(MovieDto movieDto) {
+        return movieRepository.update(movieDto);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.platzi.play.domain.dto.MovieDto;
 import com.platzi.play.domain.repository.MovieRepository;
 import com.platzi.play.persistance.crud.CrudMovieEntity;
+import com.platzi.play.persistance.entity.MovieEntity;
 import com.platzi.play.persistance.mapper.MovieMapper;
 
 @Repository
@@ -30,8 +31,11 @@ public class MovieEntityRepository implements MovieRepository {
     }
 
     @Override
-    public void save(MovieDto movieDto) {
-        this.crudMovieEntity.save(this.movieMapper.toEntity(movieDto));
+    public MovieDto save(MovieDto movieDto) {
+        MovieEntity movieEntity = this.movieMapper.toEntity(movieDto);
+        movieEntity.setEstado("D");
+
+        return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
     }
 
     @Override
@@ -40,7 +44,7 @@ public class MovieEntityRepository implements MovieRepository {
     }
 
     @Override
-    public void update(MovieDto movieDto) {
-        this.crudMovieEntity.save(this.movieMapper.toEntity(movieDto));
+    public MovieDto update(MovieDto movieDto) {
+        return this.movieMapper.toDto(this.crudMovieEntity.save(this.movieMapper.toEntity(movieDto)));
     }
 }
