@@ -3,6 +3,7 @@ package com.platzi.play.domain.repository;
 import java.util.List;
 
 import com.platzi.play.domain.dto.MovieDto;
+import com.platzi.play.domain.dto.UpdateMovieDto;
 
 public interface MovieRepository {
     MovieDto getById(Long id);
@@ -11,8 +12,8 @@ public interface MovieRepository {
 
     MovieDto save(MovieDto movieDto);
 
-    void delete(Long id);
+    MovieDto update(Long id, UpdateMovieDto movieDto);
 
-    MovieDto update(MovieDto movieDto);
+    void delete(Long id);
     
 }
