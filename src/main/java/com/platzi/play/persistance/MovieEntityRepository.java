@@ -1,12 +1,12 @@
 package com.platzi.play.persistance;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.springframework.stereotype.Repository;
 
 import com.platzi.play.domain.dto.MovieDto;
 import com.platzi.play.domain.dto.UpdateMovieDto;
+import com.platzi.play.domain.exception.MovieAlreadyExistException;
 import com.platzi.play.domain.repository.MovieRepository;
 import com.platzi.play.persistance.crud.CrudMovieEntity;
 import com.platzi.play.persistance.entity.MovieEntity;
@@ -34,6 +34,10 @@ public class MovieEntityRepository implements MovieRepository {
 
     @Override
     public MovieDto save(MovieDto movieDto) {
+        if (this.crudMovieEntity.findByTitulo(movieDto.title()) != null) {
+            throw new MovieAlreadyExistException(movieDto.title());
+        }
+            
         MovieEntity movieEntity = this.movieMapper.toEntity(movieDto);
         movieEntity.setEstado("D");
 
@@ -47,19 +51,7 @@ public class MovieEntityRepository implements MovieRepository {
             return null;
         }
         
-        // Log para debug
-        Logger.getLogger(MovieEntityRepository.class.getName()).info(
-            "UpdateMovieDto recibido - status: '" + movieDto.status() + "' (longitud: " + 
-            (movieDto.status() != null ? movieDto.status().length() : "null") + ")"
-        );
-        
         this.movieMapper.updateEntityFromDto(movieDto, movieEntity);
-        
-        // Log después del mapeo
-        Logger.getLogger(MovieEntityRepository.class.getName()).info(
-            "MovieEntity después del mapeo - estado: '" + movieEntity.getEstado() + "' (longitud: " + 
-            (movieEntity.getEstado() != null ? movieEntity.getEstado().length() : "null") + ")"
-        );
 
         return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
     }

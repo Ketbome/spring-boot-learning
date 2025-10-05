@@ -8,6 +8,8 @@ import com.platzi.play.domain.dto.MovieDto;
 import com.platzi.play.domain.dto.UpdateMovieDto;
 import com.platzi.play.domain.repository.MovieRepository;
 
+import dev.langchain4j.agent.tool.Tool;
+
 @Service
 public class MovieService {
     private final MovieRepository movieRepository;
@@ -20,6 +22,7 @@ public class MovieService {
         return movieRepository.getById(id);
     }
 
+    @Tool("Obtener todas las peliculas de la plataforma")
     public List<MovieDto> getAll() {
         return movieRepository.getAll();
     }
